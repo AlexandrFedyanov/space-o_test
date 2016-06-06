@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Space-O Test</string>
+    <string name="action_settings">Settings</string>
+    <string name="nav_item_notes">Notes</string>
+    <string name="nav_item_map">Map</string>
+    <string name="nav_item_image">Image</string>
+    <string name="nav_item_service">Service</string>
+</resources>
