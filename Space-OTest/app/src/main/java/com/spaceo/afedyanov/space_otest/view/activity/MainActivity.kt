@@ -8,6 +8,9 @@ import com.roughike.bottombar.OnMenuTabClickListener
 import com.spaceo.afedyanov.space_otest.R
 import com.spaceo.afedyanov.space_otest.appnavigation.showFragmentByMenuItem
 import com.spaceo.afedyanov.space_otest.view.fragment.BaseFragment
+import com.spaceo.afedyanov.space_otest.view.fragment.NotesFragment
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 
 /**
@@ -30,6 +33,10 @@ class MainActivity : AppCompatActivity() {
         initToolBar()
         initBottomNavigationView(savedInstanceState)
         showCurrentFragment()
+        addNoteButton.setOnClickListener {
+            if (currentFragment is NotesFragment)
+                (currentFragment as NotesFragment).onAddNoteClicked()
+        }
 
     }
 
@@ -38,12 +45,17 @@ class MainActivity : AppCompatActivity() {
         bottomBar.onSaveInstanceState(outState)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        bottomBar.setOnMenuTabClickListener(null)
+    }
+
     private fun initToolBar() {
         setSupportActionBar(toolbar)
     }
 
     private fun initBottomNavigationView(savedInstanceState: Bundle?) {
-        bottomBar = BottomBar.attach(this, savedInstanceState)
+        bottomBar = BottomBar.attachShy(rootLayout, fragmentContainer, savedInstanceState)
         bottomBar.setItems(R.menu.activity_main_navigation)
         bottomBar.setOnMenuTabClickListener(object: OnMenuTabClickListener {
             override fun onMenuTabSelected(menuItemId: Int) {

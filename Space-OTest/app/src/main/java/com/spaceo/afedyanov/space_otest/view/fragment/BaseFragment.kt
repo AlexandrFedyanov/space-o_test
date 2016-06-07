@@ -1,10 +1,19 @@
 package com.spaceo.afedyanov.space_otest.view.fragment
 
 import android.app.Fragment
+import android.os.Bundle
+import android.view.View
 
-open class BaseFragment: Fragment() {
+abstract class BaseFragment: Fragment() {
 
     fun scrollContentToTop() {
 
     }
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupLayout()
+    }
+
+    abstract fun setupLayout()
 }

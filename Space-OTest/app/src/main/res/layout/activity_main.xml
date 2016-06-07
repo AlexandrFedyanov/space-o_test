@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.activity.MainActivity">
@@ -8,5 +10,19 @@
     <include layout="@layout/view_toolbar"/>
 
     <include layout="@layout/content_main"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addNoteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginTop="@dimen/fab_margin"
+        android:layout_marginBottom="70dp"
+        android:src="@drawable/ic_note_add_white_24dp"
+        android:layout_gravity="end|bottom"
+        app:rippleColor="@color/colorAccentRipple"
+        app:layout_behavior="com.spaceo.afedyanov.space_otest.view.customviews.FABScrollBehavior"
+        android:clickable="true"/>
 
 </android.support.design.widget.CoordinatorLayout>

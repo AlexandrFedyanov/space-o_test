@@ -6,6 +6,7 @@ import com.spaceo.afedyanov.space_otest.view.fragment.ImageFragment
 import com.spaceo.afedyanov.space_otest.view.fragment.MapFragment
 import com.spaceo.afedyanov.space_otest.view.fragment.NotesFragment
 import com.spaceo.afedyanov.space_otest.view.fragment.ServiceFragment
+import kotlinx.android.synthetic.main.activity_main.*
 
 fun MainActivity.showFragmentByMenuItem(menuItemId: Int) {
     when(menuItemId) {
@@ -18,21 +19,25 @@ fun MainActivity.showFragmentByMenuItem(menuItemId: Int) {
 
 fun MainActivity.showNotesFragment() {
     currentFragment = NotesFragment.newInstance()
+    addNoteButton.show()
     animateShowCurrentFragment()
 }
 
 fun MainActivity.showImageFragment() {
     currentFragment = ImageFragment.newInstance()
+    addNoteButton.hide()
     animateShowCurrentFragment()
 }
 
 fun MainActivity.showServiceFragment() {
     currentFragment = ServiceFragment.newInstance()
+    addNoteButton.hide()
     animateShowCurrentFragment()
 }
 
 fun MainActivity.showMapFragment() {
     currentFragment = MapFragment.newInstance()
+    addNoteButton.hide()
     animateShowCurrentFragment()
 }
 

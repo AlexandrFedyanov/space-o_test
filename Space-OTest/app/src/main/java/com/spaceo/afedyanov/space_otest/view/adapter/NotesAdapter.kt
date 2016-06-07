@@ -14,6 +14,9 @@ class NotesAdapter(values: MutableList<Note>): BaseRecycleAdapter<Note>(values){
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
-
+        val noteHolder = holder as NoteViewHolder
+        val note = getItem(position)
+        holder.noteName.text = note.name
+        holder.stateCheckBox.isChecked = note.isChecked
     }
 }

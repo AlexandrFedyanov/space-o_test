@@ -28,4 +28,8 @@ class ImageFragment: BaseFragment() {
         return inflater?.inflate(R.layout.fragment_image, container, false)
     }
 
+    override fun setupLayout() {
+
+    }
+
 }

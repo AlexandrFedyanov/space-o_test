@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:layout_margin="10dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+        <ImageView
+            android:id="@+id/stateImage"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight=".2"
+            android:scaleType="center"
+            android:layout_gravity="center_vertical"/>
+        <TextView
+            android:id="@+id/noteName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".65"
+            android:padding="10dp"
+            android:lines="10"
+            tools:text="This is a sample note name"
+            android:layout_gravity="center_vertical"/>
+        <CheckBox
+            android:id="@+id/stateCheckBox"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight=".15"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"/>
 
+    </LinearLayout>
 </android.support.v7.widget.CardView>

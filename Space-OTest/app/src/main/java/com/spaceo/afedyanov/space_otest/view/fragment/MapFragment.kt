@@ -28,4 +28,7 @@ class MapFragment: BaseFragment() {
         return inflater?.inflate(R.layout.fragment_map, container, false)
     }
 
+    override fun setupLayout() {
+
+    }
 }

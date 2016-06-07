@@ -1,6 +1,8 @@
 package com.spaceo.afedyanov.space_otest.model.entity
 
-class Note {
+import java.io.Serializable
+
+class Note: Serializable{
     var name: String? = null
-    val isChecked: Boolean? = null
+    var isChecked: Boolean = false
 }

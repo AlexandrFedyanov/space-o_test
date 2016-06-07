@@ -22,4 +22,8 @@ class ServiceFragment: BaseFragment() {
         return inflater?.inflate(R.layout.fragment_service, container, false)
     }
 
+    override fun setupLayout() {
+
+    }
+
 }
