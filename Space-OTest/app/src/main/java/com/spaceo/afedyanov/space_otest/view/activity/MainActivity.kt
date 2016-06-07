@@ -1,11 +1,13 @@
 package com.spaceo.afedyanov.space_otest.view.activity
 
-import android.support.v7.app.AppCompatActivity
+import android.app.Fragment
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import com.roughike.bottombar.BottomBar
 import com.roughike.bottombar.OnMenuTabClickListener
 import com.spaceo.afedyanov.space_otest.R
-import com.spaceo.afedyanov.space_otest.utils.MainActivityNavigationManager
+import com.spaceo.afedyanov.space_otest.appnavigation.showFragmentByMenuItem
+import com.spaceo.afedyanov.space_otest.view.fragment.BaseFragment
 import kotlinx.android.synthetic.main.view_toolbar.*
 
 /**
@@ -18,22 +20,17 @@ class MainActivity : AppCompatActivity() {
     private val SERVICE_TAB_POSITION = 2
     private val MAP_TAB_POSITION = 3
 
-    private lateinit var navigationManager: MainActivityNavigationManager
     private lateinit var bottomBar: BottomBar
+
+    var currentFragment: BaseFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initToolBar()
-        navigationManager = MainActivityNavigationManager(this, fragmentManager)
         initBottomNavigationView(savedInstanceState)
         showCurrentFragment()
 
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        navigationManager.onDestroy()
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -50,12 +47,12 @@ class MainActivity : AppCompatActivity() {
         bottomBar.setItems(R.menu.activity_main_navigation)
         bottomBar.setOnMenuTabClickListener(object: OnMenuTabClickListener {
             override fun onMenuTabSelected(menuItemId: Int) {
-                navigationManager.showFragmentByMenuItem(menuItemId)
+                showFragmentByMenuItem(menuItemId)
                 setUpTitleByMenuItem(menuItemId)
             }
 
             override fun onMenuTabReSelected(menuItemId: Int) {
-                navigationManager.scrollCurrentFragmentToTop()
+                currentFragment?.scrollContentToTop()
             }
         })
     }
@@ -68,7 +65,7 @@ class MainActivity : AppCompatActivity() {
             SERVICE_TAB_POSITION -> itemId = R.id.nav_service
             MAP_TAB_POSITION -> itemId = R.id.nav_map
         }
-        navigationManager.showFragmentByMenuItem(itemId)
+        showFragmentByMenuItem(itemId)
         setUpTitleByMenuItem(itemId)
     }
 

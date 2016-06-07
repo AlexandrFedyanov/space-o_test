@@ -15,17 +15,17 @@ import com.spaceo.afedyanov.space_otest.listener.NotesFragmentListener
 /**
  * Created by Alexandr on 06.06.2016.
  */
-class NotesFragment: BaseFragment() {
+class MapFragment: BaseFragment() {
 
 
     companion object {
-        fun newInstance() : NotesFragment {
-            return NotesFragment()
+        fun newInstance() : MapFragment {
+            return MapFragment()
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_notes, container, false)
+        return inflater?.inflate(R.layout.fragment_map, container, false)
     }
 
 }
