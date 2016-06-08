@@ -1,7 +1,9 @@
 package com.spaceo.afedyanov.space_otest.presenter
 
+import android.app.Activity
 import android.content.Intent
 import android.util.Log
+import com.spaceo.afedyanov.space_otest.appnavigation.NavigationConstants
 import com.spaceo.afedyanov.space_otest.model.entity.Note
 import com.spaceo.afedyanov.space_otest.model.storage.Storage
 import com.spaceo.afedyanov.space_otest.presenter.presenterinrerface.NotesPresenter
@@ -26,11 +28,7 @@ class NotesPresenterImpl(private val storage: Storage?): NotesPresenter {
     }
 
     override fun addNoteClick() {
-        val note = Note()
-        note.isChecked = false
-        note.name = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. "
-        note._id = storage?.saveNote(note)
-        view?.addNote(note)
+        view?.openAddNoteScreen()
     }
 
     override fun removeNoteClick(note: Note) {
@@ -53,6 +51,17 @@ class NotesPresenterImpl(private val storage: Storage?): NotesPresenter {
     }
 
     override fun setActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == NavigationConstants.Codes.ADD_NOTE_REQUEST) {
+                val note = data?.getSerializableExtra(NavigationConstants.Keys.NOTE_KEY) as Note
+                note._id = storage?.saveNote(note)
+                view?.addNote(note)
+            }
+            else if (requestCode == NavigationConstants.Codes.EDIT_NOTE_REQUEST) {
+                val note = data?.getSerializableExtra(NavigationConstants.Keys.NOTE_KEY) as Note
+                note._id = storage?.saveNote(note)
+                view?.updateNote(note)
+            }
+        }
     }
 }

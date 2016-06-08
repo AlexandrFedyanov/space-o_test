@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="4dp">
     <LinearLayout
+        android:id="@+id/rootLayout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,7 +24,6 @@
             android:layout_height="wrap_content"
             android:layout_weight=".65"
             android:padding="10dp"
-            android:lines="10"
             tools:text="This is a sample note name"
             android:layout_gravity="center_vertical"/>
         <CheckBox

@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.view_toolbar.*
 /**
  * Created by Alexandr on 06.06.2016.
  */
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseToolbarActivity() {
 
     private val NOTES_TAB_POSITION = 0
     private val IMAGE_TAB_POSITION = 1
@@ -30,14 +30,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        initToolBar()
         initBottomNavigationView(savedInstanceState)
         showCurrentFragment()
-        addNoteButton.setOnClickListener {
-            if (currentFragment is NotesFragment)
-                (currentFragment as NotesFragment).onAddNoteClicked()
-        }
-
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -50,8 +44,12 @@ class MainActivity : AppCompatActivity() {
         bottomBar.setOnMenuTabClickListener(null)
     }
 
-    private fun initToolBar() {
-        setSupportActionBar(toolbar)
+
+    override fun setupLayout() {
+        addNoteButton.setOnClickListener {
+            if (currentFragment is NotesFragment)
+                (currentFragment as NotesFragment).onAddNoteClicked()
+        }
     }
 
     private fun initBottomNavigationView(savedInstanceState: Bundle?) {

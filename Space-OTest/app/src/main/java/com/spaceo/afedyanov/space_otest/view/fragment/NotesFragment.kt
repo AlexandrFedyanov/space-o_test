@@ -2,9 +2,8 @@ package com.spaceo.afedyanov.space_otest.view.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.support.design.widget.Snackbar
+import android.view.*
 import com.spaceo.afedyanov.space_otest.R
 import com.spaceo.afedyanov.space_otest.appnavigation.showCreateNote
 import com.spaceo.afedyanov.space_otest.appnavigation.showEditNote
@@ -22,10 +21,12 @@ import kotlinx.android.synthetic.main.fragment_notes.*
 /**
  * Created by Alexandr on 06.06.2016.
  */
-class NotesFragment: BaseFragment(), NotesView {
+class NotesFragment: BaseFragment(), NotesView, ActionMode.Callback {
 
     private lateinit var adapter: NotesAdapter
     private lateinit var presenter: NotesPresenter
+    private var actionMode: ActionMode? = null
+    private var actionModeMenu: Menu? = null
 
     companion object {
         fun newInstance() : NotesFragment {
@@ -52,8 +53,19 @@ class NotesFragment: BaseFragment(), NotesView {
         presenter.attachView(this)
         adapter = NotesAdapter(mutableListOf())
         adapter.setNotesClickListener(object: NotesAdapterItemsClickListener {
-            override fun onNoteClick(note: Note) {
-                presenter.editNoteClick(note)
+            override fun onNoteClick(note: Note, position: Int) {
+                if (actionMode != null) {
+                    toggleSelection(position)
+                } else
+                    presenter.editNoteClick(note)
+            }
+
+            override fun onNoteLongClick(position: Int) {
+                if (actionMode != null) {
+                    return
+                }
+                actionMode = activity.startActionMode(this@NotesFragment)
+                toggleSelection(position)
             }
 
             override fun onNoteCheckClick(note: Note, isChecked: Boolean) {
@@ -111,5 +123,48 @@ class NotesFragment: BaseFragment(), NotesView {
 
     override fun openEdinNoteScreen(note: Note) {
         showEditNote(note)
+    }
+
+    override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
+        val inflater = mode.menuInflater
+        inflater.inflate(R.menu.menu_notes, menu)
+        actionModeMenu = menu
+        return true
+    }
+
+
+    override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
+        return false
+    }
+
+    override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
+        val selectedNotes = adapter.getSelectedItems()
+        when (item.itemId) {
+            R.id.action_delete -> {
+                presenter.removeNotesClick(selectedNotes)
+                actionMode?.finish()
+            }
+            R.id.action_edit -> {
+                presenter.editNoteClick(selectedNotes[0])
+                actionMode?.finish()
+            }
+        }
+        return false
+    }
+
+    private fun toggleSelection(idx: Int) {
+        adapter.toggleSelection(idx)
+        if (adapter.getSelectedItemsCount() == 0)
+            actionMode?.finish()
+        else {
+            actionModeMenu?.findItem(R.id.action_edit)?.isVisible = adapter.getSelectedItemsCount() == 1
+            val title = getString(R.string.selected_count, adapter.getSelectedItemsCount())
+            actionMode?.title = title
+        }
+    }
+
+    override fun onDestroyActionMode(mode: ActionMode) {
+        this.actionMode = null
+        adapter.clearSelections()
     }
 }

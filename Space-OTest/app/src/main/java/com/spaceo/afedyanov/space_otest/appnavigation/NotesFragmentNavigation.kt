@@ -18,5 +18,5 @@ fun NotesFragment.showEditNote(note : Note) {
     val intent = Intent(activity, NoteAddEditActivity::class.java)
     intent.action = NavigationConstants.Actions.ACTION_EDIT_NOTE
     intent.putExtra(NavigationConstants.Keys.NOTE_KEY, note)
-    startActivityForResult(intent, NavigationConstants.Codes.ADD_NOTE_REQUEST)
+    startActivityForResult(intent, NavigationConstants.Codes.EDIT_NOTE_REQUEST)
 }

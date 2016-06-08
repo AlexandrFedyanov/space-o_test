@@ -5,4 +5,6 @@
     <color name="colorAccent">#8BC34A</color>
     <color name="colorAccentRipple">#6d9342</color>
     <color name="colorPrimaryRipple">#526169</color>
+    <color name="base_selector">#82607d8b</color>
+    <color name="transparent">#00ffffff</color>
 </resources>

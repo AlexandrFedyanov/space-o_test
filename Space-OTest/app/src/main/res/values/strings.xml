@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Space-O Test</string>
+    <string name="note_add_edit_title">Note</string>
 
     <!-- menu items-->
     <string name="action_settings">Settings</string>
@@ -7,13 +8,22 @@
     <string name="nav_item_map">Map</string>
     <string name="nav_item_image">Image</string>
     <string name="nav_item_service">Service</string>
+    <string name="action_note_edit">Edit</string>
+    <string name="action_note_delete">Delete</string>
 
     <!--notes view-->
     <string name="no_notes_text">You have no saved notes yet. Click \"add\" button to add a note.</string>
+    <string name="selected_count">%1$s selected</string>
 
     <!--note add/edit view-->
     <string name="add_note_hint">Enter your note</string>
     <string name="cancel_button">Cancel</string>
     <string name="save_button">Save</string>
+    <string name="exit_dialog_message">Do you want save note before exit</string>
+    <string name="exit_dialog_ok">Save</string>
+    <string name="exit_dialog_cancel">Not Save</string>
+    <string name="empty_save_dialog_message">Do you want to save empty message</string>
+    <string name="empty_dialog_ok">Save Empty</string>
+    <string name="empty_dialog_cancel">Cancel</string>
 
 </resources>
