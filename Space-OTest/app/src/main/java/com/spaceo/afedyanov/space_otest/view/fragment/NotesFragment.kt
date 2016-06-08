@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import com.spaceo.afedyanov.space_otest.R
 import com.spaceo.afedyanov.space_otest.appnavigation.showCreateNote
 import com.spaceo.afedyanov.space_otest.appnavigation.showEditNote
+import com.spaceo.afedyanov.space_otest.listener.NotesAdapterItemsClickListener
 import com.spaceo.afedyanov.space_otest.model.entity.Note
+import com.spaceo.afedyanov.space_otest.model.storage.Storage
 import com.spaceo.afedyanov.space_otest.presenter.NotesPresenterImpl
 import com.spaceo.afedyanov.space_otest.presenter.presenterinrerface.NotesPresenter
 import com.spaceo.afedyanov.space_otest.view.adapter.NotesAdapter
@@ -46,14 +48,27 @@ class NotesFragment: BaseFragment(), NotesView {
     }
 
     override fun setupLayout() {
-        presenter = NotesPresenterImpl()
+        presenter = NotesPresenterImpl(Storage.get(activity))
         presenter.attachView(this)
         adapter = NotesAdapter(mutableListOf())
+        adapter.setNotesClickListener(object: NotesAdapterItemsClickListener {
+            override fun onNoteClick(note: Note) {
+            }
+
+            override fun onNoteCheckClick(note: Note, isChecked: Boolean) {
+                presenter.checkNoteClick(note, isChecked)
+            }
+        })
         notesList.adapter = adapter
         presenter.getNotes()
     }
 
-    override fun setNotes(notes: MutableList<Note>) {
+    override fun scrollContentToTop() {
+        notesList.scrollToPosition(0)
+    }
+
+    override fun setNotes(notes: MutableList<Note>?) {
+        notes ?: return
         adapter.clear()
         adapter.setData(notes)
         refreshNotesVisualState()
@@ -62,6 +77,10 @@ class NotesFragment: BaseFragment(), NotesView {
     override fun addNote(note: Note) {
         adapter.add(note)
         refreshNotesVisualState()
+    }
+
+    override fun updateNote(note: Note) {
+        adapter.updateItem(note)
     }
 
     override fun removeNote(note: Note) {

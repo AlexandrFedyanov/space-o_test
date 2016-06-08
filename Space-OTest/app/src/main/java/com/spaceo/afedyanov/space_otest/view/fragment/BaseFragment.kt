@@ -6,7 +6,7 @@ import android.view.View
 
 abstract class BaseFragment: Fragment() {
 
-    fun scrollContentToTop() {
+    open fun scrollContentToTop() {
 
     }
 

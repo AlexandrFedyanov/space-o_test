@@ -1,7 +1,8 @@
-package com.retechlabs.ahold.storage
+package com.spaceo.afedyanov.space_otest.model.storage
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
+import com.spaceo.afedyanov.space_otest.model.entity.Note
 import nl.qbusict.cupboard.CupboardFactory.cupboard
 import nl.qbusict.cupboard.DatabaseCompartment
 
@@ -17,13 +18,21 @@ class Storage(private val context: Context) {
         databaseCompartment = cupboard().withDatabase(database)
     }
 
-  /*  fun saveMessage(message: Message): Long {
-        return databaseCompartment.put<Message>(message)
+    fun saveNote(note: Note): Long {
+        return databaseCompartment.put<Note>(note)
     }
 
-    fun getMessages(): MutableList<Message> {
-        return databaseCompartment.query<Message>(Message::class.java).list()
-    }*/
+    fun getNotes(): MutableList<Note> {
+        return databaseCompartment.query<Note>(Note::class.java).list()
+    }
+
+    fun removeNote(note: Note) {
+        databaseCompartment.delete<Note>(note)
+    }
+
+    fun updateNote(note: Note) {
+        databaseCompartment.put<Note>(note)
+    }
 
     companion object {
         private var instance: Storage? = null

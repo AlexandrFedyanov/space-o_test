@@ -32,6 +32,19 @@ open class BaseRecycleAdapter<T>(protected var values : MutableList<T>) : Recycl
         notifyItemInserted(0)
     }
 
+    open fun updateItem(item: T) {
+        var position = -1;
+        for (i in 0..itemCount) {
+            if (item == getItem(i)) {
+                position = i;
+                break
+            }
+        }
+        values.removeAt(position)
+        values.add(position, item)
+        notifyItemChanged(position)
+    }
+
     fun remove(item : T) {
         val position = values.indexOf(item)
         values.remove(item)

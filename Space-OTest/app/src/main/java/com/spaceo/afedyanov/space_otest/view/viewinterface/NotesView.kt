@@ -7,9 +7,11 @@ import com.spaceo.afedyanov.space_otest.model.entity.Note
  */
 interface NotesView {
 
-    fun setNotes(notes: MutableList<Note>)
+    fun setNotes(notes: MutableList<Note>?)
 
     fun addNote(note: Note)
+
+    fun updateNote(note: Note)
 
     fun removeNote(note: Note)
 

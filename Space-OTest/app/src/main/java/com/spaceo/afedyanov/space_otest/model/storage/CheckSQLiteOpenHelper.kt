@@ -1,8 +1,9 @@
-package com.retechlabs.ahold.storage
+package com.spaceo.afedyanov.space_otest.model.storage
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.spaceo.afedyanov.space_otest.model.entity.Note
 import nl.qbusict.cupboard.CupboardFactory.cupboard
 
 class CheckSQLiteOpenHelper(context: Context) : SQLiteOpenHelper(context, CheckSQLiteOpenHelper.DB_NAME, null, CheckSQLiteOpenHelper.DB_VERSION) {
@@ -21,7 +22,7 @@ class CheckSQLiteOpenHelper(context: Context) : SQLiteOpenHelper(context, CheckS
         private val DB_VERSION = 1
 
         init {
-           // cupboard().register<Message>(Message::class.java)
+            cupboard().register<Note>(Note::class.java)
         }
     }
 }

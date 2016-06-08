@@ -17,9 +17,13 @@ interface NotesPresenter {
 
     fun addNoteClick()
 
+    fun removeNoteClick(note: Note)
+
     fun removeNotesClick(notes: MutableList<Note>)
 
     fun editNoteClick(note: Note)
+
+    fun checkNoteClick(note: Note, isChecked: Boolean)
 
     fun setActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 }
