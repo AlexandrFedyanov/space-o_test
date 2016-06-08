@@ -31,7 +31,6 @@ class MainActivity : BaseToolbarActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initBottomNavigationView(savedInstanceState)
-        showCurrentFragment()
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -65,18 +64,6 @@ class MainActivity : BaseToolbarActivity() {
                 currentFragment?.scrollContentToTop()
             }
         })
-    }
-
-    private fun showCurrentFragment() {
-        var itemId = R.id.nav_notes;
-        when(bottomBar.currentTabPosition) {
-            NOTES_TAB_POSITION -> itemId = R.id.nav_notes
-            IMAGE_TAB_POSITION -> itemId = R.id.nav_image
-            SERVICE_TAB_POSITION -> itemId = R.id.nav_service
-            MAP_TAB_POSITION -> itemId = R.id.nav_map
-        }
-        showFragmentByMenuItem(itemId)
-        setUpTitleByMenuItem(itemId)
     }
 
     private fun setUpTitleByMenuItem(menuItemId: Int) {

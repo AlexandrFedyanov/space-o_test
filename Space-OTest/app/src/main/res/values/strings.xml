@@ -25,5 +25,10 @@
     <string name="empty_save_dialog_message">Do you want to save empty message</string>
     <string name="empty_dialog_ok">Save Empty</string>
     <string name="empty_dialog_cancel">Cancel</string>
+    <string name="title_activity_maps">Map</string>
+
+    <!--map view-->
+    <string name="my_location_marker">Me</string>
+    <string name="my_location_formatted_text">My location: %1$f, %1$f</string>
 
 </resources>

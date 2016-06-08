@@ -3,7 +3,7 @@ package com.spaceo.afedyanov.space_otest.appnavigation
 import com.spaceo.afedyanov.space_otest.R
 import com.spaceo.afedyanov.space_otest.view.activity.MainActivity
 import com.spaceo.afedyanov.space_otest.view.fragment.ImageFragment
-import com.spaceo.afedyanov.space_otest.view.fragment.MapFragment
+import com.spaceo.afedyanov.space_otest.view.fragment.MyLocationFragment
 import com.spaceo.afedyanov.space_otest.view.fragment.NotesFragment
 import com.spaceo.afedyanov.space_otest.view.fragment.ServiceFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -36,7 +36,7 @@ fun MainActivity.showServiceFragment() {
 }
 
 fun MainActivity.showMapFragment() {
-    currentFragment = MapFragment.newInstance()
+    currentFragment = MyLocationFragment.newInstance()
     addNoteButton.hide()
     animateShowCurrentFragment()
 }
