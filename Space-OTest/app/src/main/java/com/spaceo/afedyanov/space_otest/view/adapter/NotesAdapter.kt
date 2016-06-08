@@ -40,6 +40,7 @@ class NotesAdapter(values: MutableList<Note>): BaseSelectableReycleAdaprer<Note>
             val note = getItem(position)
             holder.noteName.text = note.name
             holder.stateCheckBox.isChecked = note.isChecked
+            holder.stateImage.setImageResource(if (note.isChecked) R.drawable.ic_check_circle_white_48dp else R.drawable.ic_info_white_48dp)
             holder.noteName.setOnClickListener({ listener?.onNoteClick(note, position) })
             holder.noteName.setOnLongClickListener{
                 listener?.onNoteLongClick(position)
