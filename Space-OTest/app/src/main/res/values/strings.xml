@@ -11,4 +11,9 @@
     <!--notes view-->
     <string name="no_notes_text">You have no saved notes yet. Click \"add\" button to add a note.</string>
 
+    <!--note add/edit view-->
+    <string name="add_note_hint">Enter your note</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="save_button">Save</string>
+
 </resources>

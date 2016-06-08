@@ -43,6 +43,7 @@ class NotesPresenterImpl(private val storage: Storage?): NotesPresenter {
     }
 
     override fun editNoteClick(note: Note) {
+        view?.openEdinNoteScreen(note)
     }
 
     override fun checkNoteClick(note: Note, isChecked: Boolean) {

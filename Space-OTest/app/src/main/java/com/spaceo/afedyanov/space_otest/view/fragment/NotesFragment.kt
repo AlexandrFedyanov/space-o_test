@@ -53,6 +53,7 @@ class NotesFragment: BaseFragment(), NotesView {
         adapter = NotesAdapter(mutableListOf())
         adapter.setNotesClickListener(object: NotesAdapterItemsClickListener {
             override fun onNoteClick(note: Note) {
+                presenter.editNoteClick(note)
             }
 
             override fun onNoteCheckClick(note: Note, isChecked: Boolean) {
