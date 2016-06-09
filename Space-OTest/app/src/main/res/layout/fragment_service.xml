@@ -17,12 +17,24 @@
         android:text="@string/no_feeds_text"
         android:visibility="visible"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/feedsList"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/pullToRefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutManager="LinearLayoutManager"
-        tools:listitem="@layout/view_note_item"
-        android:visibility="gone"/>
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/feedsList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="LinearLayoutManager"
+            tools:listitem="@layout/view_note_item"
+            android:visibility="gone"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/toolbar_bottom_nav_coordinator_margin"
+        android:layout_gravity="center"/>
 
 </FrameLayout>

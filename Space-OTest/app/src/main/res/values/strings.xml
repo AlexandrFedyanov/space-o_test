@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Space-O Test</string>
     <string name="note_add_edit_title">Note</string>
+    <string name="lang_settings_title">Select language</string>
 
     <!-- menu items-->
     <string name="action_settings">Settings</string>
@@ -37,5 +38,10 @@
 
     <!--feeds view-->
     <string name="no_feeds_text">Pull to refresh feeds</string>
+
+    <!--language view-->
+    <string name="select_language">Select language</string>
+    <string name="eng">English</string>
+    <string name="ru">Russian</string>
 
 </resources>
