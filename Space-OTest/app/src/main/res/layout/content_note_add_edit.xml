@@ -22,15 +22,14 @@
                 android:id="@+id/noteNameEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxHeight="400dp"
+                android:maxHeight="@dimen/note_edit_card_max_height"
                 android:layout_margin="10dp"
                 android:paddingTop="20dp"
                 android:hint="@string/add_note_hint"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_alignParentBottom="true">
+                android:orientation="horizontal">
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/cancelButton"
                     android:layout_width="0dp"

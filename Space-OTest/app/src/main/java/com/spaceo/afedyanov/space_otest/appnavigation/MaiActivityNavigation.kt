@@ -5,7 +5,7 @@ import com.spaceo.afedyanov.space_otest.view.activity.MainActivity
 import com.spaceo.afedyanov.space_otest.view.fragment.ImageFragment
 import com.spaceo.afedyanov.space_otest.view.fragment.MyLocationFragment
 import com.spaceo.afedyanov.space_otest.view.fragment.NotesFragment
-import com.spaceo.afedyanov.space_otest.view.fragment.ServiceFragment
+import com.spaceo.afedyanov.space_otest.view.fragment.FeedsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 fun MainActivity.showFragmentByMenuItem(menuItemId: Int) {
@@ -30,7 +30,7 @@ fun MainActivity.showImageFragment() {
 }
 
 fun MainActivity.showServiceFragment() {
-    currentFragment = ServiceFragment.newInstance()
+    currentFragment = FeedsFragment.newInstance()
     addNoteButton.hide()
     animateShowCurrentFragment()
 }

@@ -31,6 +31,12 @@ dependencies {
     compile 'nl.qbusict:cupboard:2.1.1'
     compile 'com.roughike:bottom-bar:1.3.5'
     compile 'com.google.android.gms:play-services:8.4.0'
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile ('com.squareup.retrofit2:converter-simplexml:2.0.2') {
+        exclude module: 'stax'
+        exclude module: 'stax-api'
+        exclude module: 'xpp3'
+    }
 }
 
 buildscript {

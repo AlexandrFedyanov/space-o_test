@@ -25,7 +25,7 @@
         android:paddingTop="20dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:paddingBottom="130dp"
+        android:paddingBottom="@dimen/toolbar_bottom_nav_coordinator_margin"
         android:background="@android:color/white"
         tools:text="My location: -43.2343, 53.234"/>
 </RelativeLayout>
