@@ -1,29 +1,35 @@
 package com.spaceo.afedyanov.space_otest.view.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.spaceo.afedyanov.space_otest.R
-import com.spaceo.afedyanov.space_otest.model.api.ApiFacade
 import com.spaceo.afedyanov.space_otest.model.entity.FeedRecord
-import com.spaceo.afedyanov.space_otest.model.entity.FeedResponse
+import com.spaceo.afedyanov.space_otest.presenter.FeedsPresenterImpl
+import com.spaceo.afedyanov.space_otest.presenter.presenterinrerface.FeedsPresenter
+import com.spaceo.afedyanov.space_otest.presenter.presenterinrerface.PresenterFactory
+import com.spaceo.afedyanov.space_otest.utils.FeedPresenterCache
 import com.spaceo.afedyanov.space_otest.view.adapter.FeedsAdapter
+import com.spaceo.afedyanov.space_otest.view.viewinterface.FeedsView
 import com.spaceo.afedyanov.space_otest.view.visualstates.setHasFeedsState
 import com.spaceo.afedyanov.space_otest.view.visualstates.setLoadingState
 import com.spaceo.afedyanov.space_otest.view.visualstates.setNoFeedsState
 import kotlinx.android.synthetic.main.fragment_service.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 /**
  * Created by Alexandr on 06.06.2016.
  */
-class FeedsFragment : BaseFragment() {
+class FeedsFragment : BaseFragment(), FeedsView {
 
     private lateinit var adapter: FeedsAdapter
+    private lateinit var feedsPresenter: FeedsPresenter
+
+    private val presenterFactory: PresenterFactory<FeedsPresenter> = object: PresenterFactory<FeedsPresenter> {
+        override fun createPresenter(): FeedsPresenter {
+            return FeedsPresenterImpl(FeedsFragment::class.java.simpleName)
+        }
+    }
 
     companion object {
         fun newInstance() : FeedsFragment {
@@ -34,36 +40,29 @@ class FeedsFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.fragment_service, container, false)
     }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        feedsPresenter.detachView()
+    }
 
     override fun setupLayout() {
+        feedsPresenter = FeedPresenterCache.instance.getPresenter(FeedsFragment::class.java.simpleName, presenterFactory)
+        feedsPresenter.attachView(this)
         adapter = FeedsAdapter(mutableListOf())
         feedsList.adapter = adapter
         pullToRefresh.setOnRefreshListener {
-            pullToRefresh.isRefreshing = true
-            getFeeds()
+            feedsPresenter.refreshFeeds()
         }
-        showLoading()
-        getFeeds()
+        feedsPresenter.getFeeds()
     }
 
-    fun getFeeds() {
-        val apiFacade = ApiFacade()
-        apiFacade.apiFeedService.getFeeds().enqueue(object: Callback<FeedResponse?> {
-            override fun onResponse(call: Call<FeedResponse?>?, response: Response<FeedResponse?>?) {
-                if (response != null && response.isSuccessful) {
-                    setFeeds(response.body()?.feedRecords)
-                }
-            }
-
-            override fun onFailure(call: Call<FeedResponse?>?, t: Throwable?) {
-                setFeeds(null)
-            }
-        })
+    override fun scrollContentToTop() {
+        feedsList.scrollToPosition(0)
     }
 
-    fun setFeeds(feeds: MutableList<FeedRecord>?) {
+    override fun setFeeds(feeds: MutableList<FeedRecord>) {
         pullToRefresh.isRefreshing = false
-        if (feeds == null || feeds.size == 0) {
+        if (feeds.size == 0) {
             setNoFeedsState()
         } else {
             setHasFeedsState()
@@ -74,8 +73,11 @@ class FeedsFragment : BaseFragment() {
         }
     }
 
-    fun showLoading() {
+    override fun setLoading() {
         setLoadingState()
     }
 
+    override fun setRefreshing() {
+        pullToRefresh.isRefreshing = true
+    }
 }

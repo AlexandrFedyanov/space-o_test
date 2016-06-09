@@ -8,7 +8,7 @@
     <string name="nav_item_notes">Notes</string>
     <string name="nav_item_map">Map</string>
     <string name="nav_item_image">Image</string>
-    <string name="nav_item_service">Service</string>
+    <string name="nav_item_service">Feeds</string>
     <string name="action_note_edit">Edit</string>
     <string name="action_note_delete">Delete</string>
 
@@ -20,7 +20,7 @@
     <string name="add_note_hint">Enter your note</string>
     <string name="cancel_button">Cancel</string>
     <string name="save_button">Save</string>
-    <string name="exit_dialog_message">Do you want save note before exit</string>
+    <string name="exit_dialog_message">Do you want save note before exit?</string>
     <string name="exit_dialog_ok">Save</string>
     <string name="exit_dialog_cancel">Not Save</string>
     <string name="empty_save_dialog_message">Do you want to save empty note</string>

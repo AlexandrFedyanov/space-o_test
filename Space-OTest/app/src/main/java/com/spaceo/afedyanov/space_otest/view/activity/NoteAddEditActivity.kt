@@ -18,6 +18,7 @@ class NoteAddEditActivity : BaseToolbarActivity() {
     }
 
     override fun setupLayout() {
+        title = getString(R.string.select_language)
         saveButton.setOnClickListener({ checkAndSaveNote() })
         cancelButton.setOnClickListener({ finish() })
         noteNameEditText.setText(getCurrentNote().name)

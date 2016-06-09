@@ -15,7 +15,7 @@ class PreferenceHelper {
         }
 
         fun saveLanguage(context: Context, language: String) {
-            context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE).edit().putString(KEY_LANGUAGE, language)
+            context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE).edit().putString(KEY_LANGUAGE, language).apply()
         }
     }
 }

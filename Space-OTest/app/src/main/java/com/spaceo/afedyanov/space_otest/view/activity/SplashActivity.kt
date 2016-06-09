@@ -4,6 +4,8 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import com.spaceo.afedyanov.space_otest.utils.PreferenceHelper
+import java.util.*
 
 class SplashActivity : AppCompatActivity() {
 
@@ -11,7 +13,15 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setAppLanguage()
         Handler().postDelayed({ showMainActivity() }, splashDelay)
+    }
+
+    fun setAppLanguage() {
+        val locale = Locale(PreferenceHelper.getSavedLanguage(this))
+        val newConfiguration = resources.configuration
+        newConfiguration.locale = locale
+        resources.updateConfiguration(newConfiguration, resources.displayMetrics)
     }
 
     fun showMainActivity() {

@@ -1,6 +1,8 @@
 package com.spaceo.afedyanov.space_otest.appnavigation
 
+import android.content.Intent
 import com.spaceo.afedyanov.space_otest.R
+import com.spaceo.afedyanov.space_otest.view.activity.LanguageSettingsActivity
 import com.spaceo.afedyanov.space_otest.view.activity.MainActivity
 import com.spaceo.afedyanov.space_otest.view.fragment.ImageFragment
 import com.spaceo.afedyanov.space_otest.view.fragment.MyLocationFragment
@@ -46,4 +48,8 @@ fun MainActivity.animateShowCurrentFragment() {
     fragmentTransaction.setCustomAnimations(R.animator.fragment_in, R.animator.fragment_out)
     fragmentTransaction.replace(R.id.fragmentContainer, currentFragment)
     fragmentTransaction.commit()
+}
+
+fun MainActivity.showLanguageSettingsActivity() {
+    startActivity(Intent(this, LanguageSettingsActivity::class.java))
 }

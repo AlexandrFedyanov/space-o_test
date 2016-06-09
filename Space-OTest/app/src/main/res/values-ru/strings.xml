@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">Space-O Test</string>
+    <string name="note_add_edit_title">Заметка</string>
+    <string name="lang_settings_title">Выбирите язык</string>
+
+    <!-- menu items-->
+    <string name="action_settings">Сменить язык</string>
+    <string name="nav_item_notes">Заметки</string>
+    <string name="nav_item_map">Карта</string>
+    <string name="nav_item_image">Изображение</string>
+    <string name="nav_item_service">Лента</string>
+    <string name="action_note_edit">Изменить</string>
+    <string name="action_note_delete">Удалить</string>
+
+    <!--notes view-->
+    <string name="no_notes_text">У вас пока нет сохраненных заметок. Нажмите  кнопку \"добавить\" чтобы создать заметку</string>
+    <string name="selected_count">%1$s выбрано</string>
+
+    <!--note add/edit view-->
+    <string name="add_note_hint">Введите заметку</string>
+    <string name="cancel_button">Отмена</string>
+    <string name="save_button">Сохранить</string>
+    <string name="exit_dialog_message">Хотите сохранить перед выходом?</string>
+    <string name="exit_dialog_ok">Сохранить</string>
+    <string name="exit_dialog_cancel">Не сохранять</string>
+    <string name="empty_save_dialog_message">Заметка пустая, все равно сохранить?</string>
+    <string name="empty_dialog_ok">Сохранить пустую</string>
+    <string name="empty_dialog_cancel">Отмена</string>
+    <string name="title_activity_maps">Карта</string>
+
+    <!--map view-->
+    <string name="my_location_marker">Вы здесь</string>
+    <string name="my_location_formatted_text">Моя геопозиция: %1$f, %1$f</string>
+
+    <!--image view-->
+    <string name="take_picture_button">Сделать снимок</string>
+    <string name="select_picture_button">Выбрать из галереи</string>
+
+    <!--feeds view-->
+    <string name="no_feeds_text">Потяните вниз чтобы обновить</string>
+
+    <!--language view-->
+    <string name="select_language">Выберите язык</string>
+    <string name="eng">Английский</string>
+    <string name="ru">Русский</string>
+
+</resources>

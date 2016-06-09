@@ -31,8 +31,6 @@
             android:name=".view.activity.NoteAddEditActivity"
             android:label="@string/note_add_edit_title"
             android:theme="@style/AppTheme.NoActionBar" />
-
-
         <activity
             android:name=".view.activity.LanguageSettingsActivity"
             android:label="@string/lang_settings_title"

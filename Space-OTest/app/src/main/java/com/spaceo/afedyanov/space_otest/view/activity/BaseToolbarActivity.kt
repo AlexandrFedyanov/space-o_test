@@ -1,5 +1,6 @@
 package com.spaceo.afedyanov.space_otest.view.activity
 
+import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.ActionMode
 import kotlinx.android.synthetic.main.view_toolbar.*
@@ -7,8 +8,12 @@ import java.util.*
 
 abstract class BaseToolbarActivity : AppCompatActivity() {
 
-    private var currentLocale: Locale? = null
+    private lateinit var currentLocale: Locale
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        currentLocale = resources.configuration.locale
+    }
     override fun setContentView(layoutResID: Int) {
         super.setContentView(layoutResID)
         initToolBar()
