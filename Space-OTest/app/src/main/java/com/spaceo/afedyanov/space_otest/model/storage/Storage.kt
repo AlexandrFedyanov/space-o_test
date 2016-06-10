@@ -11,28 +11,18 @@ class Storage(private val context: Context) {
     private lateinit var openHelper: CheckSQLiteOpenHelper
     private lateinit var database: SQLiteDatabase
     private lateinit var databaseCompartment: DatabaseCompartment
+    lateinit var notesRepository: NotesRepository
+    lateinit var feedRecordsRepository: FeedRecordsRepository
 
     init {
         openHelper = CheckSQLiteOpenHelper(context)
         database = openHelper.writableDatabase
         databaseCompartment = cupboard().withDatabase(database)
+        notesRepository = NotesRepository(databaseCompartment)
+        feedRecordsRepository = FeedRecordsRepository(databaseCompartment)
     }
 
-    fun saveNote(note: Note): Long {
-        return databaseCompartment.put<Note>(note)
-    }
 
-    fun getNotes(): MutableList<Note> {
-        return databaseCompartment.query<Note>(Note::class.java).list()
-    }
-
-    fun removeNote(note: Note) {
-        databaseCompartment.delete<Note>(note)
-    }
-
-    fun updateNote(note: Note) {
-        databaseCompartment.put<Note>(note)
-    }
 
     companion object {
         private var instance: Storage? = null

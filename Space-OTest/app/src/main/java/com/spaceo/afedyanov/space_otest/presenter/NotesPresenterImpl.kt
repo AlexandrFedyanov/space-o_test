@@ -24,7 +24,7 @@ class NotesPresenterImpl(private val storage: Storage?): NotesPresenter {
         this.view = null
     }
     override fun getNotes() {
-        view?.setNotes(storage?.getNotes())
+        view?.setNotes(storage?.notesRepository?.getNotes())
     }
 
     override fun addNoteClick() {
@@ -32,7 +32,7 @@ class NotesPresenterImpl(private val storage: Storage?): NotesPresenter {
     }
 
     override fun removeNoteClick(note: Note) {
-        storage?.removeNote(note)
+        storage?.notesRepository?.removeNote(note)
         view?.removeNote(note)
     }
 
@@ -46,7 +46,7 @@ class NotesPresenterImpl(private val storage: Storage?): NotesPresenter {
 
     override fun checkNoteClick(note: Note, isChecked: Boolean) {
         note.isChecked = isChecked;
-        storage?.updateNote(note)
+        storage?.notesRepository?.updateNote(note)
         view?.updateNote(note)
     }
 
@@ -54,12 +54,12 @@ class NotesPresenterImpl(private val storage: Storage?): NotesPresenter {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == NavigationConstants.Codes.ADD_NOTE_REQUEST) {
                 val note = data?.getSerializableExtra(NavigationConstants.Keys.NOTE_KEY) as Note
-                note._id = storage?.saveNote(note)
+                note._id = storage?.notesRepository?.saveNote(note)
                 view?.addNote(note)
             }
             else if (requestCode == NavigationConstants.Codes.EDIT_NOTE_REQUEST) {
                 val note = data?.getSerializableExtra(NavigationConstants.Keys.NOTE_KEY) as Note
-                note._id = storage?.saveNote(note)
+                note._id = storage?.notesRepository?.saveNote(note)
                 view?.updateNote(note)
             }
         }

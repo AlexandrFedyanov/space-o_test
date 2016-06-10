@@ -3,6 +3,7 @@ package com.spaceo.afedyanov.space_otest.presenter
 import com.spaceo.afedyanov.space_otest.model.api.ApiFacade
 import com.spaceo.afedyanov.space_otest.model.entity.FeedRecord
 import com.spaceo.afedyanov.space_otest.model.entity.FeedResponse
+import com.spaceo.afedyanov.space_otest.model.storage.Storage
 import com.spaceo.afedyanov.space_otest.presenter.presenterinrerface.FeedsPresenter
 import com.spaceo.afedyanov.space_otest.utils.FeedPresenterCache
 import com.spaceo.afedyanov.space_otest.view.viewinterface.FeedsView
@@ -13,7 +14,11 @@ import retrofit2.Response
 /**
  * Created by Alexandr on 09.06.2016.
  */
-class FeedsPresenterImpl(private val tag:String): FeedsPresenter {
+class FeedsPresenterImpl(private val tag:String, private val storage: Storage?): FeedsPresenter {
+
+    companion object {
+        var NEED_REFRESH = true
+    }
 
     private val apiFacade = ApiFacade()
     private var isLoading = false
@@ -35,14 +40,22 @@ class FeedsPresenterImpl(private val tag:String): FeedsPresenter {
     override fun getFeeds() {
         if (feedRecords.size > 0) {
             view?.setFeeds(feedRecords)
-            if (isLoading) view?.setLoading()
-            if (isRefreshing) view?.setRefreshing()
         } else if (!isLoading && !isRefreshing) {
-            isLoading = true
-            view?.setLoading()
-            loadFeeds()
+            val cachedFeeds = getFeedsFromCache()
+            if (cachedFeeds != null) {
+                feedRecords = cachedFeeds
+                view?.setFeeds(feedRecords)
+                if (NEED_REFRESH) {
+                    isRefreshing = true
+                    loadFeeds()
+                }
+            }  else {
+                isLoading = true
+                loadFeeds()
+            }
         }
-
+        if (isLoading) view?.setLoading()
+        if (isRefreshing) view?.setRefreshing()
     }
 
     override fun refreshFeeds() {
@@ -64,6 +77,7 @@ class FeedsPresenterImpl(private val tag:String): FeedsPresenter {
                 view?.setFeeds(feedRecords)
                 isLoading = false
                 isRefreshing = false
+                NEED_REFRESH = false
                 cacheData()
             }
 
@@ -77,11 +91,12 @@ class FeedsPresenterImpl(private val tag:String): FeedsPresenter {
         })
     }
 
-    fun getFeedsFromCache(): MutableList<FeedRecord> {
-        return mutableListOf()
+    fun getFeedsFromCache(): MutableList<FeedRecord>? {
+        return storage?.feedRecordsRepository?.getCachedFeeds()
     }
 
     private fun cacheData() {
+        storage?.feedRecordsRepository?.setCachedFeeds(feedRecords)
         view ?: FeedPresenterCache.instance.removePresenter(tag)
     }
 }

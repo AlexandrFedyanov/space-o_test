@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.spaceo.afedyanov.space_otest.R
 import com.spaceo.afedyanov.space_otest.model.entity.FeedRecord
+import com.spaceo.afedyanov.space_otest.model.storage.Storage
 import com.spaceo.afedyanov.space_otest.presenter.FeedsPresenterImpl
 import com.spaceo.afedyanov.space_otest.presenter.presenterinrerface.FeedsPresenter
 import com.spaceo.afedyanov.space_otest.presenter.presenterinrerface.PresenterFactory
@@ -27,7 +28,7 @@ class FeedsFragment : BaseFragment(), FeedsView {
 
     private val presenterFactory: PresenterFactory<FeedsPresenter> = object: PresenterFactory<FeedsPresenter> {
         override fun createPresenter(): FeedsPresenter {
-            return FeedsPresenterImpl(FeedsFragment::class.java.simpleName)
+            return FeedsPresenterImpl(FeedsFragment::class.java.simpleName, Storage.get(this@FeedsFragment.activity))
         }
     }
 
