@@ -77,7 +77,7 @@ class NotesFragment: BaseFragment(), NotesView, ActionMode.Callback {
     }
 
     override fun scrollContentToTop() {
-        notesList.scrollToPosition(0)
+        notesList.smoothScrollToPosition(0)
     }
 
     override fun setNotes(notes: MutableList<Note>?) {

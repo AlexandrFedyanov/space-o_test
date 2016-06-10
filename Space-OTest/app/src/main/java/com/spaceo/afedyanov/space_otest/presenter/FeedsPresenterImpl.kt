@@ -34,7 +34,9 @@ class FeedsPresenterImpl(private val tag:String, private val storage: Storage?):
     }
 
     override fun detachView() {
-       view = null
+        view = null
+        if (!isLoading && !isRefreshing)
+            FeedPresenterCache.instance.removePresenter(tag)
     }
 
     override fun getFeeds() {
@@ -45,11 +47,9 @@ class FeedsPresenterImpl(private val tag:String, private val storage: Storage?):
             if (cachedFeeds != null) {
                 feedRecords = cachedFeeds
                 view?.setFeeds(feedRecords)
-                if (NEED_REFRESH) {
-                    isRefreshing = true
-                    loadFeeds()
-                }
-            }  else {
+
+            }
+            if (NEED_REFRESH) {
                 isLoading = true
                 loadFeeds()
             }

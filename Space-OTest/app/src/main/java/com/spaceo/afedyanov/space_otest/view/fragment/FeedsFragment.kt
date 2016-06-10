@@ -16,6 +16,7 @@ import com.spaceo.afedyanov.space_otest.view.viewinterface.FeedsView
 import com.spaceo.afedyanov.space_otest.view.visualstates.setHasFeedsState
 import com.spaceo.afedyanov.space_otest.view.visualstates.setLoadingState
 import com.spaceo.afedyanov.space_otest.view.visualstates.setNoFeedsState
+import com.spaceo.afedyanov.space_otest.view.visualstates.setRefreshingState
 import kotlinx.android.synthetic.main.fragment_service.*
 
 /**
@@ -58,11 +59,10 @@ class FeedsFragment : BaseFragment(), FeedsView {
     }
 
     override fun scrollContentToTop() {
-        feedsList.scrollToPosition(0)
+        feedsList.smoothScrollToPosition(0)
     }
 
     override fun setFeeds(feeds: MutableList<FeedRecord>) {
-        pullToRefresh.isRefreshing = false
         if (feeds.size == 0) {
             setNoFeedsState()
         } else {
@@ -79,6 +79,6 @@ class FeedsFragment : BaseFragment(), FeedsView {
     }
 
     override fun setRefreshing() {
-        pullToRefresh.isRefreshing = true
+        setRefreshingState()
     }
 }

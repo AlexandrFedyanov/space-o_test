@@ -14,16 +14,26 @@ fun FeedsFragment.setNoFeedsState() {
     feedsList.visibility = View.INVISIBLE
     noFeedText.visibility = View.VISIBLE
     progress.visibility = View.INVISIBLE
+    pullToRefresh.isRefreshing = false
 }
 
 fun FeedsFragment.setHasFeedsState() {
     feedsList.visibility = View.VISIBLE
     noFeedText.visibility = View.INVISIBLE
     progress.visibility = View.INVISIBLE
+    pullToRefresh.isRefreshing = false
 }
 
 fun FeedsFragment.setLoadingState() {
     feedsList.visibility = View.INVISIBLE
     noFeedText.visibility = View.INVISIBLE
     progress.visibility = View.VISIBLE
+    pullToRefresh.isRefreshing = false
+}
+
+fun FeedsFragment.setRefreshingState() {
+    feedsList.visibility = View.VISIBLE
+    noFeedText.visibility = View.INVISIBLE
+    progress.visibility = View.INVISIBLE
+    pullToRefresh.isRefreshing = true
 }

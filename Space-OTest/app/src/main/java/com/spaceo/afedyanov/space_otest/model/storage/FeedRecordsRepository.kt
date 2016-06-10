@@ -10,6 +10,7 @@ class FeedRecordsRepository(private val databaseCompartment: DatabaseCompartment
     }
 
     fun setCachedFeeds(feeds: MutableList<FeedRecord>) {
+        clearCachedFeeds()
         databaseCompartment.put(feeds)
     }
 
