@@ -7,6 +7,8 @@ object NavigationConstants {
     object Actions {
         val ACTION_EDIT_NOTE = "edit_note"
         val ACTION_CREATE_NOTE = "create_note"
+        val ACTION_TAKE_PICTURE = "take_picture"
+        val ACTION_SELECT_PICTURE = "select_picture"
     }
 
     object Codes {

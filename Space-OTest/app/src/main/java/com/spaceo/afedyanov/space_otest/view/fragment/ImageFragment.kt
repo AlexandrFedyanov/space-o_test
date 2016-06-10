@@ -10,7 +10,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.spaceo.afedyanov.space_otest.R
+import com.spaceo.afedyanov.space_otest.appnavigation.showImageActivitySelectPicture
+import com.spaceo.afedyanov.space_otest.appnavigation.showImageActivityTakePicture
 import com.spaceo.afedyanov.space_otest.listener.NotesFragmentListener
+import kotlinx.android.synthetic.main.fragment_image.*
 
 /**
  * Created by Alexandr on 06.06.2016.
@@ -29,7 +32,8 @@ class ImageFragment: BaseFragment() {
     }
 
     override fun setupLayout() {
-
+        takePictureButton.setOnClickListener({ showImageActivityTakePicture() })
+        selectPictureButton.setOnClickListener({ showImageActivitySelectPicture() })
     }
 
 }
