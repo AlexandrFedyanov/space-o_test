@@ -63,7 +63,7 @@ class MyLocationFragment : BaseFragment(), OnMapReadyCallback {
     override fun scrollContentToTop() {
         locationHelper ?: return
         val currentLocation = locationHelper?.getCurrentLocation()
-        map?.moveCamera(CameraUpdateFactory.newLatLng(LatLng(currentLocation!![0], currentLocation!![1])))
+        map?.moveCamera(CameraUpdateFactory.newLatLng(LatLng(currentLocation!![0], currentLocation[1])))
     }
 
     override fun onMapReady(map: GoogleMap?) {
