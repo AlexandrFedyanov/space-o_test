@@ -5,12 +5,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.activity.ImageZoomActivity"
-    tools:showIn="@layout/activity_image_zoom">
+    tools:showIn="@layout/activity_image_zoom"
+    android:background="@android:color/black">
 
-    <ImageView
+    <com.spaceo.afedyanov.space_otest.view.customviews.ZoomImageView
         android:id="@+id/zoomImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="center"/>
+        android:scaleType="matrix"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom|center_horizontal"
+        android:divider="@color/colorPrimaryDark"
+        android:showDividers="middle">
+        <ImageView
+            android:id="@+id/zoomInButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_zoom_in_white_36dp"
+            android:background="@drawable/button_selector"
+            android:padding="10dp"/>
+        <ImageView
+            android:id="@+id/zoomOutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_zoom_out_white_36dp"
+            android:background="@drawable/button_selector"
+            android:padding="10dp"/>
+    </LinearLayout>
 
 </FrameLayout>

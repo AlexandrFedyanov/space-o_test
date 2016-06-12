@@ -3,6 +3,7 @@ package com.spaceo.afedyanov.space_otest.view.activity
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.ActionMode
+import com.spaceo.afedyanov.space_otest.utils.PreferenceHelper
 import kotlinx.android.synthetic.main.view_toolbar.*
 import java.util.*
 
@@ -22,6 +23,12 @@ abstract class BaseToolbarActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        //language configuration may be reseted to default when app loose focus, so we need to
+        //set language back according user settings
+        val locale = Locale(PreferenceHelper.getSavedLanguage(this))
+        val newConfiguration = resources.configuration
+        newConfiguration.locale = locale
+        resources.updateConfiguration(newConfiguration, resources.displayMetrics)
         checkLanguageChanged()
     }
 

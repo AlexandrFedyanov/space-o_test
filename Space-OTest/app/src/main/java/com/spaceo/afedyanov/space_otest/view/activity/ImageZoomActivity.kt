@@ -4,29 +4,47 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import com.spaceo.afedyanov.space_otest.R
 import com.spaceo.afedyanov.space_otest.appnavigation.NavigationConstants
 import com.spaceo.afedyanov.space_otest.utils.BitmapHelper
+import com.spaceo.afedyanov.space_otest.utils.FileUtility
 import kotlinx.android.synthetic.main.content_image_zoom.*
 import java.io.File
-import java.text.SimpleDateFormat
-import java.util.*
 
 class ImageZoomActivity : BaseToolbarActivity() {
 
+    private val BITMAP_KEY = "bitmap"
+    private val PHOTO_FILE = "photo_file"
+
     private var createdPhoto: File? = null
     private var bitmapHelper: BitmapHelper? = null;
+    private var bitmap: Bitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        when (intent.action) {
-            NavigationConstants.Actions.ACTION_SELECT_PICTURE -> selectPictureFromGallery()
-            NavigationConstants.Actions.ACTION_TAKE_PICTURE -> takePictureFromCamera()
-        }
         setContentView(R.layout.activity_image_zoom)
+        if (savedInstanceState == null)
+            when (intent.action) {
+                NavigationConstants.Actions.ACTION_SELECT_PICTURE -> selectPictureFromGallery()
+                NavigationConstants.Actions.ACTION_TAKE_PICTURE -> takePictureFromCamera()
+            }
         bitmapHelper = BitmapHelper(this)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState?.putParcelable(BITMAP_KEY, bitmap)
+        outState?.putString(PHOTO_FILE, createdPhoto?.absolutePath)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        bitmap = savedInstanceState?.getParcelable(BITMAP_KEY)
+        showImage(bitmap)
+        val photoFilePath = savedInstanceState?.getString(PHOTO_FILE)
+        if (photoFilePath != null)
+            createdPhoto = File(photoFilePath)
     }
 
     override fun onDestroy() {
@@ -37,12 +55,14 @@ class ImageZoomActivity : BaseToolbarActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == RESULT_OK && requestCode == NavigationConstants.Codes.TAKE_PICTURE_REQUEST) {
-            bitmapHelper?.createBitmapAsync(createdPhoto!!.absolutePath, { bitmap -> showImage(bitmap) })
+            bitmapHelper?.createBitmapAsync(createdPhoto!!.absolutePath, zoomImage.measuredWidth, zoomImage.measuredHeight,
+                    { bitmap -> showImage(bitmap) })
         } else if (resultCode == RESULT_CANCELED && requestCode == NavigationConstants.Codes.TAKE_PICTURE_REQUEST) {
             createdPhoto?.delete()
         } else if (resultCode == RESULT_OK && requestCode == NavigationConstants.Codes.SELECT_PICTURE_REQUEST) {
             if (data != null)
-                bitmapHelper?.createBitmapAsync(data.data, { bitmap -> showImage(bitmap) })
+                bitmapHelper?.createBitmapAsync(data.data, zoomImage.measuredWidth, zoomImage.measuredHeight,
+                        { bitmap -> showImage(bitmap) })
         }
         if (resultCode == RESULT_CANCELED)
             finish()
@@ -50,10 +70,13 @@ class ImageZoomActivity : BaseToolbarActivity() {
     }
 
     override fun setupLayout() {
+        zoomInButton.setOnClickListener({ zoomImage.zoomIn() })
+        zoomOutButton.setOnClickListener({ zoomImage.zoomOut() })
     }
 
 
     fun showImage(bitmap: Bitmap?) {
+        this.bitmap = bitmap
         zoomImage.setImageBitmap(bitmap)
     }
 
@@ -64,20 +87,9 @@ class ImageZoomActivity : BaseToolbarActivity() {
     }
 
     fun takePictureFromCamera() {
-        createdPhoto = createImageFile()
+        createdPhoto = FileUtility.createTempImageFile()
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(createdPhoto));
         startActivityForResult(intent, NavigationConstants.Codes.TAKE_PICTURE_REQUEST)
-    }
-
-    private fun createImageFile(): File {
-        // Create an image file name
-        val timeStamp = SimpleDateFormat.getDateTimeInstance().format(Date())
-        val imageFileName = "space_o_"+timeStamp
-        val storageDir = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES)
-        val image = File.createTempFile(
-                imageFileName, ".jpg", storageDir )
-        return image
     }
 }

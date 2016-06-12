@@ -14,16 +14,6 @@ class BitmapHelper(private var context: Context?) {
 
     val defaultSizeKey = -1
 
-    fun createBitmap(filePath: String,  width : Int, height : Int): Bitmap? {
-        val bmp = decodeSampledBitmapFromResource(filePath, width, height)
-        return bmp
-    }
-
-    fun createBitmap(uri: Uri,  width : Int, height : Int): Bitmap? {
-        val bmp = decodeSampledBitmapFromUri(uri, width, height)
-        return bmp
-    }
-
     fun createBitmapAsync(filePath: String,  width : Int, height : Int, onComplete: (Bitmap?) -> Unit) {
         async() {
             val bitmap = createBitmap(filePath, width, height)
@@ -46,6 +36,16 @@ class BitmapHelper(private var context: Context?) {
         createBitmapAsync(uri, defaultSizeKey, defaultSizeKey, onComplete)
     }
 
+    private fun createBitmap(filePath: String,  width : Int, height : Int): Bitmap? {
+        val bmp = decodeSampledBitmapFromResource(filePath, width, height)
+        return bmp
+    }
+
+    private fun createBitmap(uri: Uri,  width : Int, height : Int): Bitmap? {
+        val bmp = decodeSampledBitmapFromUri(uri, width, height)
+        return bmp
+    }
+
     private fun decodeSampledBitmapFromResource(filePath : String, width : Int, height : Int) : Bitmap? {
         var options: BitmapFactory.Options? = null
         if (width != defaultSizeKey) {
@@ -64,7 +64,7 @@ class BitmapHelper(private var context: Context?) {
         }
         val matrix = Matrix()
         matrix.postRotate(rotation)
-        var bitmap: Bitmap?
+        val bitmap: Bitmap?
         if (options != null) {
             bitmap = BitmapFactory.decodeFile(filePath, options);
         } else {
@@ -76,24 +76,12 @@ class BitmapHelper(private var context: Context?) {
 
     private fun decodeSampledBitmapFromUri(uri : Uri, width : Int, height : Int) : Bitmap? {
         context ?: return null
-        var options: BitmapFactory.Options? = null
-        if (width != defaultSizeKey) {
-            options = BitmapFactory.Options()
-            options.inJustDecodeBounds = true;
-            options.inSampleSize = calculateInSampleSize(options, width, height);
-            options.inJustDecodeBounds = false;
-        }
-        val inputStream = context?.contentResolver?.openInputStream(uri)
-        var bitmap: Bitmap?
-        if (options != null) {
-            bitmap = BitmapFactory.decodeStream(inputStream, Rect(), options);
-        } else {
-            bitmap = BitmapFactory.decodeStream(inputStream);
-        }
-        return bitmap
+        val filePath = FileUtility.getFilePathFromUri(context!!, uri)
+        filePath ?: return null
+        return decodeSampledBitmapFromResource(filePath, width, height)
     }
 
-    fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
+    private fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
         // Raw height and width of image
         val height = options.outHeight
         val width = options.outWidth
