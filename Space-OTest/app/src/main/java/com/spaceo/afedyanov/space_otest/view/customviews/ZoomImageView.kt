@@ -6,7 +6,6 @@ import android.graphics.Matrix
 import android.graphics.PointF
 import android.graphics.RectF
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
@@ -49,14 +48,22 @@ class ZoomImageView(context: Context, attributeSet: AttributeSet): ImageView(con
     override fun setImageBitmap(bm: Bitmap?) {
         super.setImageBitmap(bm)
         bm ?: return
-        centerImage(bm)
-    }
-
-    private fun centerImage(bm: Bitmap) {
-        val drawableRect = RectF(0f, 0f, bm.width.toFloat(), bm.height.toFloat())
-        val viewRect = RectF(0f, 0f, measuredWidth.toFloat(), measuredHeight.toFloat())
         imageWidth = bm.width.toFloat()
         imageHeight = bm.height.toFloat()
+        centerImage()
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        centerImage()
+    }
+
+    /**
+     * set current bitmap in center of view
+     */
+    private fun centerImage() {
+        val drawableRect = RectF(0f, 0f, imageWidth, imageHeight)
+        val viewRect = RectF(0f, 0f, measuredWidth.toFloat(), measuredHeight.toFloat())
         mid.set( measuredWidth.toFloat()/2, measuredHeight.toFloat()/2)
         mMatrix.setRectToRect(drawableRect, viewRect, Matrix.ScaleToFit.CENTER)
         mMatrix.getValues(currentMatrixValues)
@@ -71,6 +78,9 @@ class ZoomImageView(context: Context, attributeSet: AttributeSet): ImageView(con
         imageMatrix = mMatrix
     }
 
+    /**
+     * detect touches and processed multi-touch zooming and dragging
+     */
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
         event ?: return false;
         when (event.action and MotionEvent.ACTION_MASK) {
@@ -152,6 +162,9 @@ class ZoomImageView(context: Context, attributeSet: AttributeSet): ImageView(con
         })
     }
 
+    /**
+     * animate zoom in by 1 point
+     */
     fun zoomOut() {
         val currentScaleX = currentMatrixValues[Matrix.MSCALE_X]
         if (currentScaleX == minScale && !isZooming)
@@ -178,6 +191,9 @@ class ZoomImageView(context: Context, attributeSet: AttributeSet): ImageView(con
         })
     }
 
+    /**
+     * animate zoom out by one point
+     */
     private fun moveToBounds() {
         var needMoveToBounds = false
         mMatrix.getValues(currentMatrixValues)

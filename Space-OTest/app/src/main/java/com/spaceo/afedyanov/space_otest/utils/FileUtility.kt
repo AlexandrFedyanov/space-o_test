@@ -1,11 +1,8 @@
 package com.spaceo.afedyanov.space_otest.utils
 
-import android.annotation.TargetApi
 import android.content.Context
 import android.net.Uri
-import android.os.Build
 import android.os.Environment
-import android.provider.DocumentsContract
 import android.provider.MediaStore
 import java.io.File
 import java.text.SimpleDateFormat
@@ -17,47 +14,17 @@ import java.util.*
 class FileUtility() {
     companion object {
         fun getFilePathFromUri(context: Context, uri: Uri): String? {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                return getPathForV19AndUp(context, uri);
-            } else {
-                return getPathForPreV19(context, uri);
-            }
-        }
-
-        fun  getPathForPreV19(context: Context, uri: Uri): String? {
             var file: String? = null;
             val proj: Array<String> = arrayOf(MediaStore.Images.Media.DATA );
             val cursor = context.contentResolver.query(uri, proj, null, null, null);
+            cursor ?: return uri.path
             if(cursor.moveToFirst()){;
                 val column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
                 file = cursor.getString(column_index);
             }
             cursor.close();
             return file;
-        }
 
-        @TargetApi(Build.VERSION_CODES.KITKAT)
-        fun getPathForV19AndUp(context: Context, uri: Uri): String? {
-            val wholeID: String = DocumentsContract.getDocumentId(uri);
-
-            // Split at colon, use second item in the array
-            val id = wholeID.split(":")[1];
-            val column: Array<String> = arrayOf(MediaStore.Images.Media.DATA );
-
-            // where id is equal to
-            val sel = MediaStore.Images.Media._ID + "=?";
-            val cursor = context.contentResolver.
-                    query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                            column, sel, arrayOf("id"), null);
-
-            var filePath = "";
-            val columnIndex = cursor.getColumnIndex(column[0]);
-            if (cursor.moveToFirst()) {
-                filePath = cursor.getString(columnIndex);
-            }
-
-            cursor.close();
-            return filePath;
         }
 
         fun createTempImageFile(): File {

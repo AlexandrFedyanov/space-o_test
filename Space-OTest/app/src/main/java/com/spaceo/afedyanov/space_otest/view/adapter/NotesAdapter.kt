@@ -1,9 +1,7 @@
 package com.spaceo.afedyanov.space_otest.view.adapter
 
 import android.support.v7.widget.RecyclerView
-import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import com.spaceo.afedyanov.space_otest.R
 import com.spaceo.afedyanov.space_otest.listener.NotesAdapterItemsClickListener

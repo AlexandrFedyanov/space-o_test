@@ -1,6 +1,7 @@
 package com.spaceo.afedyanov.space_otest.view.fragment
 
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,6 +60,8 @@ class FeedsFragment : BaseFragment(), FeedsView {
     }
 
     override fun scrollContentToTop() {
+        if ((feedsList.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() > 15)
+            feedsList.scrollToPosition(15)
         feedsList.smoothScrollToPosition(0)
     }
 

@@ -1,7 +1,6 @@
 package com.spaceo.afedyanov.space_otest.utils
 
 import android.content.Context
-import android.content.pm.PackageManager
 import android.os.Bundle
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient

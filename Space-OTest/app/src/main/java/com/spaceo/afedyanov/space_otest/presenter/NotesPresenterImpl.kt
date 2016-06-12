@@ -2,7 +2,6 @@ package com.spaceo.afedyanov.space_otest.presenter
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import com.spaceo.afedyanov.space_otest.appnavigation.NavigationConstants
 import com.spaceo.afedyanov.space_otest.model.entity.Note
 import com.spaceo.afedyanov.space_otest.model.storage.Storage

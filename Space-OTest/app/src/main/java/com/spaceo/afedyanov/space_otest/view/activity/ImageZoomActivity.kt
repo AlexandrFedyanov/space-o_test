@@ -12,6 +12,10 @@ import com.spaceo.afedyanov.space_otest.utils.FileUtility
 import kotlinx.android.synthetic.main.content_image_zoom.*
 import java.io.File
 
+//TODO: в задание нужно показать, как работать с обработкой мульти-тач, моя реализация в ZoomImageView. В обычной ситуации разумнее использовать
+//уже готовые решения, на пример https://github.com/davemorrissey/subsampling-scale-image-view, т.к нормальная реализация
+//полноценного зумирования изображений более обширная задача
+
 class ImageZoomActivity : BaseToolbarActivity() {
 
     private val BITMAP_KEY = "bitmap"

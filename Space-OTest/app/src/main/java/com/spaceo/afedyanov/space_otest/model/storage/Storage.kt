@@ -2,7 +2,6 @@ package com.spaceo.afedyanov.space_otest.model.storage
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import com.spaceo.afedyanov.space_otest.model.entity.Note
 import nl.qbusict.cupboard.CupboardFactory.cupboard
 import nl.qbusict.cupboard.DatabaseCompartment
 
@@ -21,8 +20,6 @@ class Storage(private val context: Context) {
         notesRepository = NotesRepository(databaseCompartment)
         feedRecordsRepository = FeedRecordsRepository(databaseCompartment)
     }
-
-
 
     companion object {
         private var instance: Storage? = null

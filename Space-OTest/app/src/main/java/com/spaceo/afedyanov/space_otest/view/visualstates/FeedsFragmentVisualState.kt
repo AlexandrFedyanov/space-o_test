@@ -2,8 +2,6 @@ package com.spaceo.afedyanov.space_otest.view.visualstates
 
 import android.view.View
 import com.spaceo.afedyanov.space_otest.view.fragment.FeedsFragment
-import com.spaceo.afedyanov.space_otest.view.fragment.NotesFragment
-import kotlinx.android.synthetic.main.fragment_notes.*
 import kotlinx.android.synthetic.main.fragment_service.*
 
 /**

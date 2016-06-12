@@ -3,6 +3,7 @@ package com.spaceo.afedyanov.space_otest.view.fragment
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import com.spaceo.afedyanov.space_otest.R
 import com.spaceo.afedyanov.space_otest.appnavigation.showCreateNote
@@ -77,6 +78,8 @@ class NotesFragment: BaseFragment(), NotesView, ActionMode.Callback {
     }
 
     override fun scrollContentToTop() {
+        if ((notesList.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() > 15)
+            notesList.scrollToPosition(15)
         notesList.smoothScrollToPosition(0)
     }
 

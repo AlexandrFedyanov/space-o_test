@@ -1,10 +1,5 @@
 package com.spaceo.afedyanov.space_otest.view.fragment
 
-import android.annotation.TargetApi
-import android.app.Activity
-import android.app.Fragment
-import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +7,6 @@ import android.view.ViewGroup
 import com.spaceo.afedyanov.space_otest.R
 import com.spaceo.afedyanov.space_otest.appnavigation.showImageActivitySelectPicture
 import com.spaceo.afedyanov.space_otest.appnavigation.showImageActivityTakePicture
-import com.spaceo.afedyanov.space_otest.listener.NotesFragmentListener
 import kotlinx.android.synthetic.main.fragment_image.*
 
 /**
