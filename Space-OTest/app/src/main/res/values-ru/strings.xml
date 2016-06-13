@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Space-O Test</string>
     <string name="note_add_edit_title">Заметка</string>
+    <string name="image_zoom_title">Масштабирование</string>
     <string name="lang_settings_title">Выбирите язык</string>
 
     <!-- menu items-->

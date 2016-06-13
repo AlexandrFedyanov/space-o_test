@@ -28,7 +28,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.ImageZoomActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/image_zoom_title"/>
         <activity
             android:name=".view.activity.NoteAddEditActivity"
             android:label="@string/note_add_edit_title"
