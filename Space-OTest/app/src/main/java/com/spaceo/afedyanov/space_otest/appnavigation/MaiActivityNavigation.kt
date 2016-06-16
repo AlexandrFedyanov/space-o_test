@@ -44,8 +44,8 @@ fun MainActivity.showMapFragment() {
 }
 
 fun MainActivity.animateShowCurrentFragment() {
-    val fragmentTransaction = fragmentManager.beginTransaction()
-    fragmentTransaction.setCustomAnimations(R.animator.fragment_in, R.animator.fragment_out)
+    val fragmentTransaction = supportFragmentManager.beginTransaction()
+    fragmentTransaction.setCustomAnimations(R.anim.fragment_in, R.anim.fragment_out)
     fragmentTransaction.replace(R.id.fragmentContainer, currentFragment)
     fragmentTransaction.commit()
 }
