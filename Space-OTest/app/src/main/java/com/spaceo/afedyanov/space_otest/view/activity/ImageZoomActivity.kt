@@ -1,10 +1,14 @@
 package com.spaceo.afedyanov.space_otest.view.activity
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import com.spaceo.afedyanov.space_otest.R
 import com.spaceo.afedyanov.space_otest.appnavigation.NavigationConstants
 import com.spaceo.afedyanov.space_otest.utils.BitmapHelper
@@ -24,15 +28,13 @@ class ImageZoomActivity : BaseToolbarActivity() {
     private var createdPhoto: File? = null
     private var bitmapHelper: BitmapHelper? = null;
     private var bitmap: Bitmap? = null
+    private val WRITE_EXTERNAL_STORAGE_PERMISSION_REQUEST = 3223
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_image_zoom)
         if (savedInstanceState == null)
-            when (intent.action) {
-                NavigationConstants.Actions.ACTION_SELECT_PICTURE -> selectPictureFromGallery()
-                NavigationConstants.Actions.ACTION_TAKE_PICTURE -> takePictureFromCamera()
-            }
+           doStartAction()
         bitmapHelper = BitmapHelper(this)
     }
 
@@ -73,11 +75,35 @@ class ImageZoomActivity : BaseToolbarActivity() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when (requestCode) {
+            WRITE_EXTERNAL_STORAGE_PERMISSION_REQUEST -> {
+                if (grantResults.size > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    doStartAction()
+                }
+            }
+        }
+    }
+
     override fun setupLayout() {
         zoomInButton.setOnClickListener({ zoomImage.zoomIn() })
         zoomOutButton.setOnClickListener({ zoomImage.zoomOut() })
     }
 
+    private fun doStartAction() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)  == PackageManager.PERMISSION_GRANTED)
+            when (intent.action) {
+                NavigationConstants.Actions.ACTION_SELECT_PICTURE -> selectPictureFromGallery()
+                NavigationConstants.Actions.ACTION_TAKE_PICTURE -> takePictureFromCamera()
+            }
+        else {
+            ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    WRITE_EXTERNAL_STORAGE_PERMISSION_REQUEST);
+        }
+
+    }
 
     fun showImage(bitmap: Bitmap?) {
         this.bitmap = bitmap

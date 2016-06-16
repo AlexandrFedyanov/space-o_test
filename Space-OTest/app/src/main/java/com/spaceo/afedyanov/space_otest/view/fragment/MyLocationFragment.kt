@@ -1,8 +1,12 @@
 package com.spaceo.afedyanov.space_otest.view.fragment
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -25,7 +29,7 @@ class MyLocationFragment : BaseFragment(), OnMapReadyCallback {
 
     private var map: GoogleMap? = null
     private var locationHelper: LocationHelper? = null
-    private var isDestroyed = false //detect when fragment was destroyed to avoid crash on screen rotation
+    private var ACCESS_LOCATION_CORE_REQUEST = 32112
 
     companion object {
         fun newInstance() : MyLocationFragment {
@@ -39,16 +43,30 @@ class MyLocationFragment : BaseFragment(), OnMapReadyCallback {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        isDestroyed = true
         locationHelper?.cleanUp()
-        Log.d("cacaobob", "onDestroy")
     }
 
     override fun setupLayout() {
         val mapFragment: MapFragment = childFragmentManager.findFragmentById(R.id.map) as MapFragment
         mapFragment.getMapAsync(this);
-        setupLocationHelper()
-        Log.d("cacaobob", "setupLayout")
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION)  == PackageManager.PERMISSION_GRANTED)
+            setupLocationHelper()
+        else {
+            ActivityCompat.requestPermissions(activity,
+                    arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+                    ACCESS_LOCATION_CORE_REQUEST);
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>?, grantResults: IntArray?) {
+        when (requestCode) {
+            ACCESS_LOCATION_CORE_REQUEST -> {
+                if (grantResults != null && grantResults.size > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    setupLocationHelper()
+                }
+            }
+        }
     }
 
     fun setupLocationHelper() {
@@ -72,7 +90,7 @@ class MyLocationFragment : BaseFragment(), OnMapReadyCallback {
     }
 
     fun showMyLocation(latitude: Double, longitude: Double) {
-        if (!isDestroyed) {
+        if (!isAdded) {
             showMyLocationText(latitude, longitude)
             showLocationMarkerOnMap(latitude, longitude)
         }
